@@ -15,6 +15,11 @@ public class MyGLRender implements GLSurfaceView.Renderer {
     Triangle tri;
     Square quad;
 
+    private float angleTriangle = 0.0f;
+    private float angleQuad = 0.0f;
+    private float speedTriangle = 0.5f;
+    private float speedQuad = -0.4f;
+
     public MyGLRender(Context context) {
         ctx = context;
         tri = new Triangle();
@@ -55,14 +60,19 @@ public class MyGLRender implements GLSurfaceView.Renderer {
 
     @Override
     public void onDrawFrame(GL10 gl) {
-        gl.glClear(GL10.GL_COLOR_BUFFER_BIT|GL10.GL_DEPTH_BUFFER_BIT);
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
-        //TODO: render here
         gl.glLoadIdentity();
         gl.glTranslatef(-1.5f, 0.0f, -6.0f);
+        gl.glRotatef(angleTriangle, 0.0f, 1.0f, 0.0f);
         tri.draw(gl);
 
-        gl.glTranslatef(3.0f, 0.0f, 0.0f);
+        gl.glLoadIdentity();
+        gl.glTranslatef(1.5f, 0.0f, -6.0f);
+        gl.glRotatef(angleQuad, 1.0f, 0.0f, 0.0f);
         quad.draw(gl);
+
+        angleTriangle += speedTriangle;
+        angleQuad += speedQuad;
     }
 }
