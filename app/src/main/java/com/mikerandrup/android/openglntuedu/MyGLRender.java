@@ -14,6 +14,9 @@ public class MyGLRender implements GLSurfaceView.Renderer {
     private Context ctx;
     private Pyramid pyramid;
     private FullCube fullCube;
+    private MultifaceCube1 multifaceCube1;
+    private MultifaceCube2 multifaceCube2;
+    private TextureCube textureCube;
 
     private static float anglePyramid = 0;
     private static float angleCube = 0;
@@ -24,6 +27,9 @@ public class MyGLRender implements GLSurfaceView.Renderer {
         ctx = context;
         pyramid = new Pyramid();
         fullCube = new FullCube();
+        multifaceCube1 = new MultifaceCube1();
+        multifaceCube2 = new MultifaceCube2();
+        textureCube = new TextureCube();
     }
 
     @Override
@@ -36,8 +42,12 @@ public class MyGLRender implements GLSurfaceView.Renderer {
         gl.glShadeModel(GL10.GL_SMOOTH);
         gl.glDisable(GL10.GL_DITHER);
 
-        //TODO: Init code
-
+        try {
+            textureCube.loadTexture(gl, ctx);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        gl.glEnable(GL10.GL_TEXTURE_2D);
     }
 
     @Override
@@ -63,15 +73,33 @@ public class MyGLRender implements GLSurfaceView.Renderer {
         gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
         gl.glLoadIdentity();
-        gl.glTranslatef(-1.5f, 0.0f, -6.0f);
+        gl.glTranslatef(-6.0f, 0.0f, -12.0f);
         gl.glRotatef(anglePyramid, 0.1f, 1.0f, -0.1f);
         pyramid.draw(gl);
 
         gl.glLoadIdentity();
-        gl.glTranslatef(1.5f, 0.0f, -6.0f);
+        gl.glTranslatef(-3.0f, 0.0f, -12.0f);
         gl.glScalef(0.8f, 0.8f, 0.8f);
         gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
         fullCube.draw(gl);
+
+        gl.glLoadIdentity();
+        gl.glTranslatef(0.0f, 0.0f, -12.0f);
+        gl.glScalef(0.8f, 0.8f, 0.8f);
+        gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
+        multifaceCube1.draw(gl);
+
+        gl.glLoadIdentity();
+        gl.glTranslatef(3.0f, 0.0f, -12.0f);
+        gl.glScalef(0.8f, 0.8f, 0.8f);
+        gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
+        multifaceCube2.draw(gl);
+
+        gl.glLoadIdentity();
+        gl.glTranslatef(6.0f, 0.0f, -12.0f);
+        gl.glScalef(0.8f, 0.8f, 0.8f);
+        gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
+        textureCube.draw(gl);
 
         anglePyramid += speedPyramid;
         angleCube += speedCube;
