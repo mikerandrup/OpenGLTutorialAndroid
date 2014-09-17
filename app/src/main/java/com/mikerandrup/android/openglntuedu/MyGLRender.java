@@ -11,19 +11,19 @@ import android.opengl.GLU;
  */
 public class MyGLRender implements GLSurfaceView.Renderer {
 
-    Context ctx;
-    Triangle tri;
-    Square quad;
+    private Context ctx;
+    private Pyramid pyramid;
+    private FullCube fullCube;
 
-    private float angleTriangle = 0.0f;
-    private float angleQuad = 0.0f;
-    private float speedTriangle = 0.5f;
-    private float speedQuad = -0.4f;
+    private static float anglePyramid = 0;
+    private static float angleCube = 0;
+    private static float speedPyramid = 2.0f;
+    private static float speedCube = -1.5f;
 
     public MyGLRender(Context context) {
         ctx = context;
-        tri = new Triangle();
-        quad = new Square();
+        pyramid = new Pyramid();
+        fullCube = new FullCube();
     }
 
     @Override
@@ -64,15 +64,16 @@ public class MyGLRender implements GLSurfaceView.Renderer {
 
         gl.glLoadIdentity();
         gl.glTranslatef(-1.5f, 0.0f, -6.0f);
-        gl.glRotatef(angleTriangle, 0.0f, 1.0f, 0.0f);
-        tri.draw(gl);
+        gl.glRotatef(anglePyramid, 0.1f, 1.0f, -0.1f);
+        pyramid.draw(gl);
 
         gl.glLoadIdentity();
         gl.glTranslatef(1.5f, 0.0f, -6.0f);
-        gl.glRotatef(angleQuad, 1.0f, 0.0f, 0.0f);
-        quad.draw(gl);
+        gl.glScalef(0.8f, 0.8f, 0.8f);
+        gl.glRotatef(angleCube, 1.0f, 1.0f, 1.0f);
+        fullCube.draw(gl);
 
-        angleTriangle += speedTriangle;
-        angleQuad += speedQuad;
+        anglePyramid += speedPyramid;
+        angleCube += speedCube;
     }
 }
